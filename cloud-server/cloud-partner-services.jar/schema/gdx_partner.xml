@@ -1,0 +1,22 @@
+<schema adapter="partnerdb">
+	<element tablename="partner">
+		<field name="id" primary="true"/>
+		<field name="name" required="true"/>
+		<field name="state" required="true"/>
+		<field name="title" required="true"/>
+		<field name="type" required="true"/>
+		<field name="subtype" required="true"/>
+		<complex name="group" ref="gdx_partner_cluster" required="true" 
+			jointype="many-to-one" includefields="objid,name,title">
+			<key field="clusterid" target="objid" />
+		</complex>	
+		<complex name="online" ref="gdx_partner_online" required="false" 
+			jointype="many-to-one" includefields="id,dtregistered">
+			<key field="id" target="id" />
+		</complex>	
+		<field name="isonline" expr="IIF(online.id  IS NULL, 0, 1)" />
+		<field name="logo" />
+		<field name="includeservices" />
+		<field name="excludeservices" />
+	</element>
+</schema>

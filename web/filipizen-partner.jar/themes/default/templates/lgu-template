@@ -1,0 +1,62 @@
+<%
+  def ctxname = REQUEST.pathInfo.split('/')[1];
+  if ( PARAMS.name ) {
+    String[] arr = PARAMS.name.split("_");
+    def group = arr[0];
+    def name = arr[1];
+    def svc = SERVICE.lookup("CloudPartnerService", "partner");
+    def obj = svc.findByGroupAndName( [groupname: group, name: name] ); 
+
+    /*
+    def cacheSvc = SERVICE.lookup("CacheService");
+    String key = "partner_info:"+PARAMS.name;
+    def obj = cacheSvc.get([key:key]);
+    if(obj==null) {
+      def svc = SERVICE.lookup("CloudPartnerService")
+      obj = svc.findByGroupAndName( [groupname: group, name: name] ); 
+      cacheSvc.put([ key: key, value: obj, timeout: 7200 ]);  
+    }
+    */
+    PARAMS.info = obj; 
+  }  
+%>
+
+<% if ( PARAMS.info?.name ) { %> 
+    <link href="/res/${MODULE.name}/custom/${PARAMS.info.name}/style.css?ver=129" type="text/css" rel="stylesheet" />
+<% } %> 
+
+
+<% if ( PARAMS.info?.name ) { %> 
+<div id="blackbar">
+  <div class="container">
+    <a class="brand" href="/${ctxname}/${PARAMS.name}/services">
+      <%if( PARAMS.info.logo ) { %>
+        <img src="data:image/png;base64,${PARAMS.info?.logo}" alt="lgu logo">
+      <%}%>
+      <%if( !PARAMS.info.logo ) { %>
+        No logo
+      <%}%>      
+    </a>
+    <nav id="lgu-nav">
+      <div class="text-links">
+         <a href="/${ctxname}/${PARAMS.name}/about">About</a>
+         <a href="/${ctxname}/${PARAMS.name}/services">Services</a>
+         <a href="/${ctxname}/${PARAMS.name}/data">Data</a>
+       </div>
+    </nav>
+  </div>
+</div>
+
+<% } %> 
+
+<div class="container">
+  ${_content}
+</div>
+
+
+ 
+
+
+
+
+
