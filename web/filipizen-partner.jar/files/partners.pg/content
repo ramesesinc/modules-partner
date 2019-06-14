@@ -1,3 +1,4 @@
+
 <% 
     def partners = [];
     def xitems = SERVICE.lookup("CloudPartnerService", "partner").getList();
@@ -8,7 +9,7 @@
 
   <div class="partners-content">
       <div class="container">
-        <h1>Select Partner Agency</h1>
+        <h1>Select a Partner Agency</h1>
         <div id="holder">                              
             <%
                 groups.each{ k -> 

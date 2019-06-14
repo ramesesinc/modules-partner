@@ -1,6 +1,8 @@
 <%
   def info = (PARAMS.info ? PARAMS.info : [:]);
   def menus = ANUBIS.getFiles('/services'); 
+  menus = menus.sort{ it.sortorder }
+
   menus.each {
     def items = ANUBIS.getFolder("/services", it.module).allowedChildren;
     items.each { bb->
@@ -26,29 +28,52 @@
   <div class="container">
     <div class="partners-container">
       <h1>Select Transaction</h1> 
-      <div class="row">
-        <ul class="layout-list">
-          <div class="row">
-            <%menus.each { o->  %>
-              <div class="col-md-3 col-xs-6 services">
-                <h4>${o.title}</h4>
-                <ul class="select">
-                  <%o.folders.each { p->%>
-                    <li>
-                    <%if( p.active != false ){ %>
-                      <a href="services/${o.module}/${p.pagename}" class="allowed-menuitem ${p.active}-active">${p.title}</a> 
-                    <%}%> 
-                    <%if( p.active == false ){ %>
-                      ${p.title}
-                    <%}%>  
-                    </li>
-                  <%}%>
-                </ul> 
-              </div>
-            <%}%>
-          </div>  
-        </ul>
-      </div>
+        <div class="row">
+          <%menus.each { o->  %>
+            <div class="col-md-3 col-xs-12 services">
+              <h4>${o.title}</h4>
+              <ul class="select">
+                <%o.folders.each { p->%>
+                  <li>
+                  <%if( p.active != false ){ %>
+                    <a href="services/${o.module}/${p.pagename}" class="allowed-menuitem ${p.active}-active">${p.title}</a> 
+                  <%}%> 
+                  <%if( p.active == false ){ %>
+                    ${p.title}
+                  <%}%>  
+                  </li>
+                <%}%>
+              </ul> 
+            </div>
+          <%}%>
+        </div>  
     </div>
   </div>
 </div>
+
+<style>
+.partners-container {
+  margin-bottom: 200px;
+  margin-top: 50px;
+}
+.services h4 {
+  color: #27ae60;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 25px;
+  margin-bottom: 0;
+}
+.select{
+  padding:0px;
+}
+.select li {
+  list-style-type: none;
+}
+.select li a {
+  text-decoration:none
+}
+.select li a:hover {
+  text-decoration:underline;
+  color:#555555;
+}
+</style>

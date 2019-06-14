@@ -5,6 +5,10 @@ class CloudPartnerService {
     @DataContext("gdx_partner")
     def partner;		
    
+
+    @DataContext("barangay")
+    def barangayEm;     
+   
     @ProxyMethod
     public def getList() {
 		//return partner.where("1=1").orderBy("group.name").list();
@@ -35,6 +39,11 @@ class CloudPartnerService {
     public def findById(params) {
         return partner.find( [id: params.id ] ).first();
     }           
+
+    @ProxyMethod
+    public def getBarangayList( def param ) {
+        return barangayEm.find([parentid: param.orgcode]).select("objid,name").orderBy("name").list(); 
+    } 
 
 
 }
