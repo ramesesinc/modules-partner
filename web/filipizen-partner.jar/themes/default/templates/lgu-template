@@ -23,7 +23,7 @@
 
 
 <% if ( PARAMS.info?.name ) { %> 
-    <link href="/res/partner/custom/${PARAMS.info.name}/style.css?ver=129" type="text/css" rel="stylesheet" />
+   <!--link href="/res/partner/custom/${PARAMS.info.name}/style.css?ver=129" type="text/css" rel="stylesheet" /-->
 <% } %> 
 
 
