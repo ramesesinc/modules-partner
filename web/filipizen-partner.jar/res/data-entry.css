@@ -1,5 +1,6 @@
 .caption-class { width:100px; font-weight:bold; vertical-align:top; }
 .output-class { font-weight: normal;}
+.input-class{border:1px solid lightgrey;}
 ::-webkit-input-placeholder{text-transform: none;}
 .w150 { width:150px; }
 .w200 { width:200px; }	
