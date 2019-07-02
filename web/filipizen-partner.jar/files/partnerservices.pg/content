@@ -25,9 +25,7 @@
 %>
 
 <div class="${info.name}-lgu">
-  <div class="container">
     <div class="partners-container">
-      <h1>Select Transaction</h1> 
         <div class="row">
           <%menus.each { o->  %>
             <div class="col-md-3 col-xs-12 services">
@@ -48,13 +46,12 @@
           <%}%>
         </div>  
     </div>
-  </div>
 </div>
 
 <style>
 .partners-container {
   margin-bottom: 200px;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 .services h4 {
   color: #27ae60;

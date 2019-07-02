@@ -27,7 +27,6 @@
 <div class="${info.name}-lgu">
   <div class="container">
     <div class="partners-container">
-      <h1>Select Dataset</h1> 
         <div class="row">
           <%menus.each { o->  %>
             <div class="col-md-3 col-xs-12 data">

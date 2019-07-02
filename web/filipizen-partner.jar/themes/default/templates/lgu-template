@@ -61,5 +61,10 @@
 <% } %> 
 
 <div class="container">
+  <%if( PAGE.title) {%>
+    <br>
+    <h2>${PAGE.title}</h2>
+  <%}%>
+  
   ${_content}
 </div>
