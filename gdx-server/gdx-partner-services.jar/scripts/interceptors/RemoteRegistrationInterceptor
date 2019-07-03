@@ -11,6 +11,8 @@ class RemoteRegistrationInterceptor {
     @After(pattern="RemoteScriptRegistryService.register.*")
     public def afterRegister(def evt) {
 		def _name = evt.args[0];
+        println "after register update parter " + _name;
+
 		def m = [id:_name, dtregistered: dateSvc.getServerDate()];
 		//remove first if any exists
 		onlineEm.delete(m);

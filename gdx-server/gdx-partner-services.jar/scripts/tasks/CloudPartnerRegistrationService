@@ -1,0 +1,47 @@
+import com.rameses.annotations.*;
+import java.io.*;
+
+class CloudPartnerRegistrationService {
+
+    @XConnection("remote-script-mq")
+    def queueSvc;
+
+    @Service("CloudPartnerService")
+    def partnerSvc;
+
+    @DataContext("gdx_partner_online")
+    def onlineEm;
+
+    //@Schedule()
+    public void onStart(def evt) {
+        println 'STARTING REMOTE SCRIPT MQ'
+        queueSvc.start();
+
+    	println "START PARTNER REGISTRATION SERVICE";
+        def list = partnerSvc.getList();
+        for(o in list) {
+            if(o.state=='ACTIVE') {
+                queueSvc.addQueue( o.id, "gdx");
+            }
+            else {
+                queueSvc.removeQueue( o.id, "gdx");
+            }
+        }
+        //we also need to notify clients so they can react 
+	    def onlinelist = onlineEm.select("id").where("1=1").list();
+        onlinelist.each {
+	       println "rejoining server " + it.id;
+       	   queueSvc.send( [status:"server-startup"], it.id ); 		
+        }
+    }			
+
+    //@Shutdown
+    public void onStop(def evt) {
+       println "STOP GDX SERVER";		
+       def list = onlineEm.select("id").where("1=1").list();
+       list.each {
+       	   queueSvc.send( [status:"server-shutdown"], it.id ); 		
+       }
+    }			
+
+}
