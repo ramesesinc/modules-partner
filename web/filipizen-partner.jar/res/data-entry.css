@@ -26,11 +26,14 @@
 
 	.customtable td {display: block}
 	.customtable tr{border-bottom: 1px solid #a5a5a5;}
+
+	.tablebilling{width: 100%}
 }
 
 @media(min-width:380px){
 	.customtable td {display: block}
 	.customtable{border: 0px}
+	.tablebilling{width: 100%}
 }
 
   /*pc monitor */
@@ -47,6 +50,7 @@
 	.lp-profession{width:20%}
 	.lp-name{width: 25%}
 	.lp-address{width: 30%}
+	.tablebilling{width: 70%}
 }
 
 /*pc monitor */
@@ -64,6 +68,7 @@
 	.ap-status{width:10%;}
 	.ap-design{width:25%;}
 	.ap-supervisor{width:25%;}
+	.tablebilling{width: 70%}
 	
 }
 

@@ -1,4 +1,4 @@
-<schema adapter="partnerdb">
+<schema>
 	<element tablename="partner_online">
 		<field name="id" primary="true"/>
 		<field name="dtregistered" required="true"/>

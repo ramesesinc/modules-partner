@@ -1,4 +1,4 @@
-<schema adapter="partnerdb">
+<schema>
 	<element tablename="partner_field_conf">
 		<field name="objid" primary="true"/>
 		<field name="partnerid" required="true"/>
