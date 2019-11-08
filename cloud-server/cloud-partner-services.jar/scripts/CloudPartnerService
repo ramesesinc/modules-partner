@@ -5,14 +5,19 @@ class CloudPartnerService {
     @DataContext("gdx_partner")
     def partner;		
    
+    @XConnection("redis-cache")
+    def cache; 
 
     @DataContext("barangay")
     def barangayEm;     
    
     @ProxyMethod
     public def getList() {
-		//return partner.where("1=1").orderBy("group.name").list();
-        return partner.getList(); 
+		def list = partner.getList();
+        list.each {
+            def v = cache.get( 'partner:'+it.id );
+            it.isonline = (v.toString()=='1')? '1' : '0';
+        } 
     } 
 
     @ProxyMethod

@@ -10,11 +10,6 @@
 			jointype="many-to-one" includefields="objid,name,title">
 			<key field="clusterid" target="objid" />
 		</complex>	
-		<complex name="online" ref="gdx_partner_online" required="false" 
-			jointype="many-to-one" includefields="id,dtregistered">
-			<key field="id" target="id" />
-		</complex>	
-		<field name="isonline" expr="IIF(online.id  IS NULL, 0, 1)" />
 		<field name="logo" />
 		<field name="includeservices" />
 		<field name="excludeservices" />

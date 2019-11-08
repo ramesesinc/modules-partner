@@ -2,6 +2,7 @@
 <% 
     def partners = [];
     def xitems = SERVICE.lookup("CloudPartnerService", "partner").getList();
+    xitems = xitems.findAll{ it.state.toString().toUpperCase() == 'ACTIVE' } 
     partners.addAll(xitems);
 
     def groups = partners.group.unique().sort{}
