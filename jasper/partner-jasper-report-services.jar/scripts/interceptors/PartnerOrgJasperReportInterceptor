@@ -1,0 +1,48 @@
+import com.rameses.annotations.*;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.util.*;
+import com.rameses.osiris2.reports.*;
+import com.rameses.util.*;
+import java.io.*;
+
+class PartnerOrgJasperReportInterceptor {
+
+	@Service(value="CloudPartnerService", connection="cloud-partner-server")
+	def svc;
+
+	@Before( pattern="JasperReportService.generateReport", eval="#{args[0].partnername != null}", index=-10000 )
+	public void beforeGenerateReport( evt ) {
+		def param = evt.args[0];
+		def arr = param.partnername.toString().split("_"); 
+		def groupname = arr[0]; 
+		def partnername = (arr.length > 1 ? arr[1] : arr[0]); 
+		def partner = svc.findByGroupAndName([ groupname: groupname, name: partnername ]); 
+		if ( !partner ) return; 
+
+		partner.remove('excludeservices');
+		partner.remove('includeservices');
+		partner.remove('clusterid');
+		partner.remove('state');
+		partner.remove('logo');
+
+		if ( partner.fullname ) {
+			partner.fullname = partner.fullname.toUpperCase(); 
+		}
+		else if ( partner.subtype ) { 
+			def buff = new StringBuilder(); 
+			buff.append(partner.subtype.toString().toUpperCase()).append(' OF '); 
+			if ( partner.name ) {
+				buff.append( partner.name[0].toString()); 
+				if ( partner.name.length() > 1 ) buff.append( partner.name.substring(1)); 
+			}
+			partner.fullname = buff.toString().toUpperCase(); 
+		}
+
+		if ( partner.group == null ) {
+			partner.group = [:]; 
+		}
+
+		partner.group.fullname = (partner.group.fullname ? partner.group.fullname.toUpperCase() : null); 
+		param.org = partner; 
+	}
+}
