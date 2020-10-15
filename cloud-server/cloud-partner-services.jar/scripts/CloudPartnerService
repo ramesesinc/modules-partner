@@ -9,7 +9,7 @@ class CloudPartnerService {
     def cache; 
 
     @DataContext("barangay")
-    def barangayEm;     
+    def barangayEm; 
    
     @ProxyMethod
     public def getList() {
@@ -18,7 +18,14 @@ class CloudPartnerService {
             def v = cache.get( 'partner:'+it.id );
             it.isonline = (v.toString()=='1')? '1' : '0';
         } 
+        return list; 
     } 
+
+    @ProxyMethod
+    public def getActivePartners() {
+        return getList().findAll{( it.state.toString().equalsIgnoreCase('ACTIVE') )} 
+    } 
+
 
     @ProxyMethod
     public def getActiveList() {
